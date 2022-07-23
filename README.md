@@ -1,2 +1,2 @@
 # nfsshell
-A debian pack of the tool https://github.com/NetDirect/nfsshell including the librarys required
+A compiled and packaged version of https://github.com/NetDirect/nfsshell including the older librarys.

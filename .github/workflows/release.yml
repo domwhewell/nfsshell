@@ -23,12 +23,15 @@ jobs:
       #    mkdir -p .debpkg/usr/bin
       #    mkdir -p .debpkg/var/www
 
+      - name: Get Current Version
+        run: echo "package_version=$(cat README.md | grep Version | cut -d' ' -f2)" >> $GITHUB_ENV
+
       - uses: jiro4989/build-deb-action@v2
         with:
           package: nfsshell
           package_root: nfsshell
-          maintainer: Dominic Whewell <domwhewell@hotmail.co.uk>
-          version: ${{ github.ref }}
+          maintainer: 'Dominic Whewell <domwhewell@hotmail.co.uk>'
+          version: ${{ env.package_version }}
           arch: 'amd64'
           desc: 'A compiled and packaged version of https://github.com/NetDirect/nfsshell including the older librarys.'
     
@@ -40,7 +43,7 @@ jobs:
         
       - uses: Hs1r1us/Release-AIO@v1.0
         with:
-          tag_name: ${{ github.ref }}
-          release_name: NFSShell ${{ github.ref }}
+          tag_name: ${{ env.package_version }}
+          release_name: NFSShell ${{ env.package_version }}
           body_path: ./package-info.txt
           asset_files: ./*.deb

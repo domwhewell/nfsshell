@@ -1,5 +1,0 @@
-Package: nfsshell
-Version: 1.0
-Architecture: amd64
-Maintainer: Dominic Whewell <domwhewell@hotmail.co.uk>
-Description: A compiled and packaged version of https://github.com/NetDirect/nfsshell including the older librarys.

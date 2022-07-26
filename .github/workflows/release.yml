@@ -1,0 +1,46 @@
+# This is a basic workflow to help you get started with Actions
+
+name: release
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      #- name: create sample script
+      #  run: |
+      #    mkdir -p .debpkg/usr/bin
+      #    mkdir -p .debpkg/var/www
+
+      - uses: jiro4989/build-deb-action@v2
+        with:
+          package: nfsshell
+          package_root: nfsshell
+          maintainer: Dominic Whewell <domwhewell@hotmail.co.uk>
+          version: ${{ github.ref }}
+          arch: 'amd64'
+          desc: 'A compiled and packaged version of https://github.com/NetDirect/nfsshell including the older librarys.'
+    
+      - name: Get debian package info
+        run: dpkg -I ./*.deb > package-info.txt
+      
+      - name: List the contents of what we have so far
+        run: ls -la
+        
+      - uses: Hs1r1us/Release-AIO@v1.0
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: NFSShell ${{ github.ref }}
+          body_path: ./package-info.txt
+          asset_files: ./*.deb

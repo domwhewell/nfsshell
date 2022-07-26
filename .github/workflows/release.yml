@@ -39,7 +39,7 @@ jobs:
         run: dpkg -I ./*.deb > package-info.txt
       
       - name: Get the package name
-        run: echo "package_name=(ls ./*.deb)" >> $GITHUB_ENV
+        run: echo "package_name=$(ls ./*.deb)" >> $GITHUB_ENV
         
       - uses: Hs1r1us/Release-AIO@v1.0
         env:
